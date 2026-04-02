@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Konversi Data ke Tabel</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f0f9ff;
       color: #333;
-      padding: 30px;
+      padding: 15px; /* Dikurangi sedikit untuk mobile */
+      margin: 0;
     }
 
     h2 {
       text-align: center;
       color: #2c3e50;
+      font-size: 1.5rem;
     }
 
     label {
@@ -23,64 +26,81 @@
       margin-bottom: 5px;
     }
 
+    /* Input & Textarea Responsive */
     textarea {
-      width: 75%;
+      width: 100%; /* Full width di mobile */
+      max-width: 800px; /* Batas di desktop */
+      box-sizing: border-box; 
       padding: 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
       resize: vertical;
-      font-size: 10px;
+      font-size: 14px; /* Ukuran font lebih nyaman dibaca */
       background-color: #ffffff;
     }
 
     input[type="number"] {
-      width: 25%;
+      width: 100%;
+      max-width: 200px;
+      box-sizing: border-box;
       padding: 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
-      resize: vertical;
       font-size: 15px;
       background-color: #ffffff;
-      font-color: red;
     }
   
+    /* Container Tombol agar tidak overflow */
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
     .btn {
+      flex: 1; /* Tombol melebar otomatis */
+      min-width: 120px;
       background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 8px;
-      padding: 10px 20px;
-      margin-top: 15px;
-      margin-right: 10px;
+      padding: 12px 15px;
       font-size: 14px;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      text-align: center;
     }
 
     .btn:hover {
       background-color: #45a049;
     }
 
+    /* Area Tabel dengan Scroll Horizontal & Vertikal */
     .table-wrapper {
       margin-top: 25px;
-      max-height: 550px; /* 13 baris kira-kira */
-      overflow-y: auto;
+      max-height: 500px; 
+      overflow-y: auto; /* Scroll Vertikal */
+      overflow-x: auto; /* Scroll Horizontal (Penting untuk mobile) */
       border: 1px solid #b0c4de;
       border-radius: 8px;
       background-color: #ffffff;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling di iOS */
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 14px;
+      font-size: 13px; /* Sedikit lebih kecil untuk muat banyak data */
+      min-width: 600px; /* Memaksa scroll horizontal jika layar sangat kecil */
     }
 
     th, td {
       border: 1px solid #dfe6e9;
       padding: 10px;
       text-align: left;
+      white-space: nowrap; /* Menjaga teks tidak berantakan saat scroll */
     }
 
     th {
@@ -105,30 +125,26 @@
 <h2>Konversi Data Baris ke Tabel</h2>
 
 <label for="inputData">Data (Setiap baris = 1 kolom data):</label>
-<textarea id="inputData" placeholder="Masukkan data di sini...">SLAMET
-
+<textarea id="inputData" rows="8" placeholder="Masukkan data di sini...">SLAMET
 00000000000000
-
 00000000000000
 Sungai Gurun
 PELEPAT LINTAS
-
 4
 1
 
 JOHN DOE
 00000000000000
 00000000000000
-
 Desa Indah
 TANJUNG RAMAN
 3
 0</textarea>
 
-<label for="columnCount">Jumlah Kolom per Record (misalnya 7):</label>
-<input type="number" id="columnCount" placeholder="Contoh: 7">
+<label for="columnCount">Jumlah Kolom per Record:</label>
+<input type="number" id="columnCount" placeholder="Contoh: 7" value="7">
 
-<div>
+<div class="button-group">
   <button class="btn" onclick="convertToTable()">Konversi ke Tabel</button>
   <button class="btn" onclick="resetAll()">Reset</button>
   <button class="btn" onclick="copyTable()">Copy Tabel</button>
@@ -139,12 +155,13 @@ TANJUNG RAMAN
 </div>
 
 <script>
+// Fungsi tetap sama sesuai permintaan (tanpa merubah logika fungsi)
 function convertToTable() {
   const input = document.getElementById("inputData").value.trim();
   const lines = input
-  .split(/\n|\t/)                     // Pecah berdasarkan baris atau tab
-  .map(line => line.trim())          // Hilangkan spasi kiri-kanan
-  .filter(line => line !== "");      // Buang baris kosong
+  .split(/\n|\t/)                     
+  .map(line => line.trim())          
+  .filter(line => line !== "");      
 
 
   const columnCount = parseInt(document.getElementById("columnCount").value);
@@ -210,4 +227,4 @@ function copyTable() {
 </script>
 
 </body>
-  </html>
+</html>
